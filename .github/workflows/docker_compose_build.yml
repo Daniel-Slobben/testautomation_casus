@@ -12,7 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: docker build
+        run: docker build --no-cache 
+        
       - name: Run docker-compose up movietest
-        run: docker-compose up --no-cache
+        run: docker-compose up 
         
         
