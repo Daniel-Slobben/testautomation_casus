@@ -12,9 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Run docker-compose build
-        run: docker-compose build
-
       - name: Run docker-compose up movietest
         run: docker-compose up --abort-on-container-exit --exit-code-from movietest
         
