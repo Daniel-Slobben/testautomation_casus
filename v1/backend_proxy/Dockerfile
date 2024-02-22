@@ -1,4 +1,4 @@
-FROM python:3.11-alpine
+FROM python:3.6-alpine
 
 # set working directory
 RUN mkdir -p /usr/src/app
@@ -16,4 +16,4 @@ EXPOSE 8080
 ADD . /usr/src/app
 
 # run server
-CMD python manage.py runserver -h 0.0.0.0 --port=8080
+CMD python manage.py runserver docker-h 0.0.0.0 --port=8080
