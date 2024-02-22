@@ -29,7 +29,7 @@ public class DataCleaner {
           users.clear();
           userRepository.findAll().forEach(users::add);
       }
-      
+     
       // Find the default Admin and User and keep them
       User admin = userRepository.findById(1).orElseThrow(() -> new RuntimeException("Admin user not found"));
       User user = userRepository.findById(2).orElseThrow(() -> new RuntimeException("User not found"));
