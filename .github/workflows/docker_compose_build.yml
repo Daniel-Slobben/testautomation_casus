@@ -16,6 +16,6 @@ jobs:
         run: docker-compose build
 
       - name: Run docker-compose up movietest
-        run: docker-compose up --abort-on-container-exit movietest
+        run: docker-compose up --abort-on-container-exit --exit-code-from movietest
         
         
