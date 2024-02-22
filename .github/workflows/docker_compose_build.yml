@@ -7,13 +7,13 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
 
       - name: docker build
-        run: docker-compose build --no-cache 
+        run: docker-compose build  
         
       - name: Run docker-compose up movietest
         run: docker-compose up 
