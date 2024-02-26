@@ -12,7 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: docker build
+        run: docker-compose build
+        
+      - name: docker down
+        run: docker-compose down
+        
       - name: Run docker-compose up movietest
-        run: docker-compose up --no-cache
+        run: docker-compose up --force-recreate
         
         
