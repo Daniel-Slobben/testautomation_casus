@@ -1,6 +1,7 @@
 package org.testcoders.movietest.hooks;
 
 import io.cucumber.java.Before;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.testcoders.movietest.model.Movie;
@@ -16,23 +17,51 @@ public class DataCleaner {
 
   @Before
   public void cleanUserData() {
-    // Find the default Admin and User and keep them
-    User admin = userRepository.findById(1).orElseThrow();
-    User user = userRepository.findById(2).orElseThrow();
-    userRepository.emptyDatabase();
-    userRepository.save(admin);
-    userRepository.save(user);
+    try {
+      List<User> users = new ArrayList<>();
+      userRepository.findAll().forEach(users::add);
+      
+      // Wait until exactly 2 users are found
+      while (users.size() != 2) {
+          Thread.sleep(1000); // Sleep for a while before checking again
+          
+          // Refresh the list of users
+          users.clear();
+          userRepository.findAll().forEach(users::add);
+      }
+      // Find the default Admin and User and keep them
+      User admin = userRepository.findById(1).orElseThrow(() -> new RuntimeException("Admin user not found"));
+      User user = userRepository.findById(2).orElseThrow(() -> new RuntimeException("User not found"));
+      userRepository.emptyDatabase();
+      userRepository.save(admin);
+      userRepository.save(user);
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new RuntimeException("Thread was interrupted", e);
+    }
   }
 
   @Before
   public void cleanMovieData() {
-    List<Movie> movie = movieRepository.findAll();
-    // Get all movies in the MongoDB and keep the first 34 movies that were seeded by Dataseeder.
-    List<Movie> movieCleaned = movie
-        .stream()
-        .limit(34)
-        .toList();
-    movieRepository.deleteAll();
-    movieRepository.saveAll(movieCleaned);
+    try {
+      List<Movie> movies = new ArrayList<>();
+      movieRepository.findAll().forEach(movies::add);
+
+      while (movies.size() != 34) {
+        Thread.sleep(1000); // Wait for 1 second before checking again
+
+        // Refresh the list of movies
+        movies.clear();
+        movieRepository.findAll().forEach(movies::add);
+      }
+      
+      // Assuming you want to keep the first 34 movies
+      List<Movie> moviesToKeep = movies.stream().limit(34).toList();
+      movieRepository.deleteAll();
+      movieRepository.saveAll(moviesToKeep);
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new RuntimeException("Thread was interrupted", e);
+    }
   }
 }

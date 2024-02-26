@@ -16,4 +16,4 @@ EXPOSE 8080
 ADD . /usr/src/app
 
 # run server
-CMD python manage.py runserver -h 0.0.0.0 --port=8080
+CMD python manage.py runserver docker-h 0.0.0.0 --port=8080
