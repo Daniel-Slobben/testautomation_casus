@@ -13,6 +13,6 @@ import static io.cucumber.core.options.Constants.*;
 @ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "org.testcoders.movietest, cucumber.api.spring")
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "json:target/cucumber.json")
 @ConfigurationParameter(key = FEATURES_PROPERTY_NAME, value = "classpath:/features/")
-@ConfigurationParameter(key = PLUGIN_PUBLISH_QUIET_PROPERTY_NAME, value = "true")
+@ConfigurationParameter(key = PLUGIN_PUBLISH_QUIET_PROPERTY_NAME, value = "false")
 public class CucumberRunner {
 }

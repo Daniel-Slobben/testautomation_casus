@@ -20,11 +20,11 @@ public class DataCleaner {
     try {
       List<User> users = new ArrayList<>();
       userRepository.findAll().forEach(users::add);
-      
+
       // Wait until exactly 2 users are found
-      while (users.size() != 2) {
-          Thread.sleep(1000); // Sleep for a while before checking again
-          
+      while (users.size() < 2) {
+          Thread.sleep(1000);
+
           // Refresh the list of users
           users.clear();
           userRepository.findAll().forEach(users::add);
@@ -44,15 +44,14 @@ public class DataCleaner {
   @Before
   public void cleanMovieData() {
     try {
-      List<Movie> movies = new ArrayList<>();
-      movieRepository.findAll().forEach(movies::add);
+      List<Movie> movies = new ArrayList<>(movieRepository.findAll());
 
-      while (movies.size() != 34) {
-        Thread.sleep(1000); // Wait for 1 second before checking again
+      while (movies.size() < 33) {
+        Thread.sleep(1000);
 
         // Refresh the list of movies
         movies.clear();
-        movieRepository.findAll().forEach(movies::add);
+        movies.addAll(movieRepository.findAll());
       }
       
       // Assuming you want to keep the first 34 movies
